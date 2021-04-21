@@ -14,3 +14,8 @@ $ brew install gnuplot
 ## コンパイル
 
 二次元版には、M1 Mac用のMakefileが付属しています。
+
+```
+$ cd src_phase
+$ make -f Makefile.M1Mac install
+```

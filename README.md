@@ -32,5 +32,5 @@ $ patch -p 1 < ../phase0_2020.01.01.patch
 
 - Ubuntu20.04LTS (WSL)
 - FOCUS
-- SX-Aurora TSUBASA
+- [SX-Aurora TSUBASA](./Aurora/README.md)
 - [Mac (M1)](./Mac_M1/README.md)

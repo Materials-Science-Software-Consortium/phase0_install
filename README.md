@@ -30,8 +30,7 @@ $ patch -p 1 < ../phase0_2020.01.01.patch
 
 個別環境向けのインストール説明です。
 
-- Ubuntu20.04LTS (WSL)
+- [Ubuntu20.04LTS (WSL)](./WSL/README.md)
 - FOCUS
 - [SX-Aurora TSUBASA](./Aurora/README.md)
 - [Mac (M1)](./Mac_M1/README.md)
-- [WSL](./WSL/README.md)

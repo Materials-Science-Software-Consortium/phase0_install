@@ -1,4 +1,4 @@
-# PHASE/0インストール (2020.01.01)
+# PHASE/0インストール (2021.01)
 
 ## ご注意
 
@@ -10,17 +10,15 @@
 
 [ダウンロードページ](https://azuma.nims.go.jp/cms1/downloads/software)から
 
-- phase0_2020.01.01.patch
-- phase0_2020.01.tar.gz
+- phase0_2021.01.tar.gz
 
 を入手します。（無償ですが、登録が必要です）
 
 ファイルを展開して、パッチを当てます。
 
 ```
-$ tar zxf phase0_2020.01.tar.gz
+$ tar zxf phase0_2021.01.tar.gz
 $ cd phase0_2020.01
-$ patch -p 1 < ../phase0_2020.01.01.patch
 ```
 
 標準的なLinux環境など、一般的なインストール手順はユーザーマニュアルを参照してください。

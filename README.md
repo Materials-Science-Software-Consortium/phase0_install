@@ -10,7 +10,7 @@
 
 [ダウンロードページ](https://azuma.nims.go.jp/cms1/downloads/software)から
 
-- phase0_2021.01.tar.gz
+- phase0_2021.02.tar.gz
 
 を入手します。（無償ですが、登録が必要です）
 

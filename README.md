@@ -29,6 +29,6 @@ $ cd phase0_2021.02
 個別環境向けのインストール説明です。
 
 - [Ubuntu20.04LTS (WSL)](./WSL/README.md)
-- FOCUS
+- [FOCUS](./FOCUS/README.md)
 - [SX-Aurora TSUBASA](./Aurora/README.md)
 - [Mac (M1)](./Mac_M1/README.md)

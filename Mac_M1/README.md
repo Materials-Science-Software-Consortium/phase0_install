@@ -4,18 +4,18 @@
 
 [homebrew](https://brew.sh)を利用して、必要なソフトウェアとライブラリをインストールします。
 
-```
-$ brew install gcc
-$ brew install open-mpi
-$ brew install fftw
-$ brew install gnuplot
+```sh
+brew install gcc
+brew install open-mpi
+brew install fftw
+brew install gnuplot
 ```
 
 ## コンパイル
 
 二次元版には、Mac (Apple Silicon) 用のMakefileが付属しています。
 
-```
-$ cd src_phase
-$ make -f Makefile.M1Mac install
+```sh
+cd src_phase
+make -f Makefile.M1Mac install
 ```

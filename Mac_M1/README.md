@@ -1,4 +1,4 @@
-# M1 Macへのインストール
+# Mac (Apple Silicon) へのインストール
 
 ## 環境設定
 
@@ -13,7 +13,7 @@ $ brew install gnuplot
 
 ## コンパイル
 
-二次元版には、M1 Mac用のMakefileが付属しています。
+二次元版には、Mac (Apple Silicon) 用のMakefileが付属しています。
 
 ```
 $ cd src_phase

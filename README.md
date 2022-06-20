@@ -32,7 +32,7 @@ cd phase0_2021.02
 - [Intel oneAPI](./InteloneAPI/README.md)
 - [FOCUS](./FOCUS/README.md)
 - [SX-Aurora TSUBASA](./Aurora/README.md)
-- [Mac (M1)](./Mac_M1/README.md)
+- [Mac (Apple Silicon)](./Mac_M1/README.md)
 
 ## 旧バージョンの情報
 

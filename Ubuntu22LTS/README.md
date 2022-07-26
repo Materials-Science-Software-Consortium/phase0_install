@@ -17,7 +17,7 @@ sudo apt install -y make gnuplot-x11 gfortran libopenmpi-dev libfftw3-dev liblap
 
 ## コンパイル
 
-オプションを追加した[Makefile](./Makefile)を`phase0_2021.02/src_phase`にコピーして使用します。
+オプションを追加した[Makefile](./Makefile.zip)（リンク先画面右下Downloadボタンでzipファイルをダウンロード）を`phase0_2021.02/src_phase`にコピーして使用します。
 
 ```sh
 cd src_phase

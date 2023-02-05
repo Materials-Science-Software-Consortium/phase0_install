@@ -8,8 +8,6 @@
 brew install gcc
 brew install open-mpi
 brew install fftw
-brew install lapack
-brew install openblas
 brew install gnuplot
 ```
 

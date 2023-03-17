@@ -38,88 +38,27 @@ $ tar -zxvf phase0_2020.01.tar.gz
 ```
 
 ### PHASE/0 コンパイル方法
-コンパイルは，通常の一般的なLinuxマシンにおけるPHASE/0のコンパイル方法と同じ方法で行うことができます。FFTライブラリーとしてはFFTW3, LAPACK/BLASはPHASE/0に同梱されているnetlib版を用います。以下，install.shスクリプトを用いて二次元版のPHASE/0をインストールする方法を説明します。コンパイル中Warningが得られるかもしれませんが，動作に支障はありません。
+コンパイルは，付属のMakefile.Linux\_genericを用いて行うことができます。このMakefileを用いるとFFTライブラリーとしてはFFTW3, LAPACK/BLASはPHASE/0に同梱されているnetlib版が利用されます。
+ただし，比較的新しい (バージョン10以降) gfortranを用いる場合，付属のMakefile.Linux\_genericではコンパイルすることができません。以下の箇所
 ```
-$ cd phase0_2020.01
-$ ./install.sh
-=== PHASE installer ===
- Do you want to install PHASE? (yes/no) [yes]
-yes
-GenMake ver 1200
-Supported platforms
- 0) GNU Linux (IA32)
- 1) GNU Linux (EM64T/AMD64)
- 2) NEC SX Series
- x) Exit
-Enter number of your platform. [0]
-1
-Selected platform: GNU Linux (EM64T/AMD64)
-Supported compilers
- 0) GNU compiler collection (gfortran)
- 1) Intel Fortran compiler
- x) Exit
-Enter number of a desired compiler. [0]
-⏎
-Selected compiler: GNU compiler collection (gfortran)
-Supported programming-models
- 0) Serial
- 1) MPI parallel
- x) Exit
-Enter number of a desired programming-model. [0]
-1
-Selected programming-model: MPI parallel
-Supported MPI libraries
- 0) Open MPI
- 1) SGI MPT
- x) Exit
-Enter number of a desired MPI library. [0]
-⏎
-Selected MPI library: Open MPI
-Supported BLAS/LAPACK
- 0) Netlib BLAS/LAPACK
- 1) Intel Math Kernel Library (MKL)
- x) Exit
-Enter number of a desired library. [0]
-⏎
-Selected BLAS/LAPACK: Netlib BLAS/LAPACK
-Supported FFT libraries
- 0) Built-in FFT subroutnes
- 1) FFTW3 library
- x) Exit
-Enter number of a desired library. [0]
-1
-Selected FFT library: FFTW3 library
-Enter FFT library directory. [/usr/local/lib]
-/usr/lib
-Selected FFT library directory: /usr/lib
-Do you want to enable the ESM feature? (yes/no) [yes]
-⏎
- Do you want to edit the makefile that has been generated? (yes/no/exit) [no]
-⏎
-Do you want to make PHASE now? (yes/no) [yes]
-⏎
-...
-...
-make[1]: Leaving directory '/home/user/phase0_2020.01/src_phase/EsmPack'
-PHASE was successfully installed.
-Do you want to check the installed programs? (yes/no) [no]
-yes
-Checking total-energy calculation.
- Total energy : -7.897015064593 Hartree/cell
- Reference    : -7.897015064593 Hartree/cell
-Checking band-energy calculation.
- Valence band maximum : 0.233846 Hartree
- Reference            : 0.233847 Hartree
+F90 = mpif90 -m64
 ```
+に
+`-fallow-argument-mismatch`を加えます。
+お使いのgfortranのバージョンにあわせたMakefile.Linux_genericを編集ができたら
+```
+make -f Makefile.Linux_generic
+```
+というコマンドを実行することによってコンパイルすることができます。
 
 ### PHASE/0の実行
-以上の作業によって，ホームディレクトリーの下のphase0_2020.01の下のbinというディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
+以上の作業によって，ホームディレクトリーの下のphase0\_2020.01の下のbinというディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
 ```
 $ mpiexec -n NP $HOME/phase0_2020.01/bin/phase ne=NE nk=NK
 ```
 mpiexecというコマンドは，MPIアプリケーションを実行するためのコマンドです。NP, NE, NKは実際は整数値を指定します。NPは総並列数，NEはバンド並列数，NKはk点並列数に対応します。
 
-なお，並列計算を実行すると以下のようなWARNINGが得られてしまいます。結果には影響しないようです。
+なお，後述のWSL2を用いない場合並列計算を実行すると以下のようなWARNINGが得られてしまいます。結果には影響しないようです。
 ```
 WARNING: Linux kernel CMA support was requested via the
 btl_vader_single_copy_mechanism MCA variable, but CMA support is
@@ -182,7 +121,6 @@ WSLで[Xウィンドウシステム](https://ja.wikipedia.org/wiki/X_Window_Syst
 ```
 $ export DISPLAY=127.0.0.1:0.0
 ```
-WSL2を用いる場合127.0.0.1ではなくIPアドレスを指定するようにしてください。
 
 ### dos.pyスクリプトが動作するようにする方法
 PHASE/0付属のdos.pyというPythonスクリプトは[tkinter](https://docs.python.org/ja/3/library/tkinter.html)と[matplotlib](https://matplotlib.org/)がインストールされていないと動作しませんが，Ubuntuのpythonにはどちらもインストールされていないようです。以下のコマンドを実行するとインストールすることができます。
@@ -195,4 +133,8 @@ $ python3 -m pip install matplotlib
 また，UbuntuのPythonのコマンドはpythonではなくpython3のようです。dos.pyはpythonというコマンド名であることを想定しているので，dos.pyの先頭の#!/usr/bin/env pythonを#!/usr/bin/env python3と書き換えるか，パスの通っているディレクトリーにpython3へのシンボリックリンクをpythonという名前で作ります。たとえば，下記のようなコマンドを実行します。
 ```
 $ sudo ln -s /usr/bin/python3 /usr/bin/python
+```
+もしくは，python3の引数としてdos.pyを渡すような使い方も可能です。
+```
+$ python3 $HOME/phase0_2020.01/bin/dos.py
 ```

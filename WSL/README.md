@@ -122,19 +122,28 @@ WSLで[Xウィンドウシステム](https://ja.wikipedia.org/wiki/X_Window_Syst
 $ export DISPLAY=127.0.0.1:0.0
 ```
 
-### dos.pyスクリプトが動作するようにする方法
-PHASE/0付属のdos.pyというPythonスクリプトは[tkinter](https://docs.python.org/ja/3/library/tkinter.html)と[matplotlib](https://matplotlib.org/)がインストールされていないと動作しませんが，Ubuntuのpythonにはどちらもインストールされていないようです。以下のコマンドを実行するとインストールすることができます。
+### pythonスクリプトが動作するようにする方法
+PHASE/0にはpythonスクリプトがいくつか同梱されています。これらは先頭に`#!/usr/bin/env python`という記述がある場合がありこれらは直接実行できるようになっていますが，UbuntuのPythonコマンドはpythonではなくpython3のようです。そのため，以下のいずれかの対応をしないと実行することができません。
+- 先頭の`#!/usr/bin/env python`を`#!/usr/bin/env python3`と書き換える
+- パスが通っているディレクトリーにpython3へのシンボリックリンクをpythonという名前で作る
 ```
-$ sudo apt install python3-pip
+$ sudo ln -s /usr/bin/python3 /usr/bin/python
+```
+- python-is-python3 をインストールすることによってPythonのコマンドをpythonに変更する
+```
+$ sudo apt-get install python-is-python3
+```
+- python3の引数としてPythonスクリプトを実行する
+```
+$ python3 $HOME/phase0_2020.01/bin/conv.py
+```
+ 
+#### dos.pyスクリプトが利用できるようにする方法
+上記に加え，dos.pyというPythonスクリプトは[tkinter](https://docs.python.org/ja/3/library/tkinter.html)と[matplotlib](https://matplotlib.org/)がインストールされていないと動作しませんが，Ubuntuのpythonにはどちらもインストールされていないようです。以下のコマンドを実行するとインストールすることができます。
+
+```
+$ sudo apt-get install python3-pip
 $ sudo apt-get install python3-tk
 $ python3 -m pip install matplotlib
 ```
 
-また，UbuntuのPythonのコマンドはpythonではなくpython3のようです。dos.pyはpythonというコマンド名であることを想定しているので，dos.pyの先頭の#!/usr/bin/env pythonを#!/usr/bin/env python3と書き換えるか，パスの通っているディレクトリーにpython3へのシンボリックリンクをpythonという名前で作ります。たとえば，下記のようなコマンドを実行します。
-```
-$ sudo ln -s /usr/bin/python3 /usr/bin/python
-```
-もしくは，python3の引数としてdos.pyを渡すような使い方も可能です。
-```
-$ python3 $HOME/phase0_2020.01/bin/dos.py
-```

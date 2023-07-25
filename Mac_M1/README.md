@@ -11,7 +11,7 @@ brew install fftw
 brew install gnuplot
 ```
 
-## コンパイル
+## コンパイル：電子状態計算ソルバーphase, ekcal, epsmain
 
 二次元版には、Mac (Apple Silicon) 用のMakefileが付属しています。
 
@@ -19,3 +19,17 @@ brew install gnuplot
 cd src_phase
 make -f Makefile.M1Mac install
 ```
+
+生成された実行形式ファイルは、`bin`ディレクトリにあります。
+
+## コンパイル：仕事関数解析プログラムworkfunc
+
+変数`F90`を指定して、`make`コマンドを実行します。
+
+```sh
+cd src_workfunc
+F90="gfortran -fallow-argument-mismatch" make
+```
+
+生成された実行形式ファイルは`workfunc`です。
+このファイルも`bin`ディレクトリに移動させても良いでしょう。

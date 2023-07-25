@@ -33,8 +33,8 @@ $ sudo apt install -y make gcc gfortran libfftw3-dev libopenmpi-dev
 ### アーカイブのコピーと解凍
 PHASE/0のアーカイブをまずはダウンロードし，分かりやすい場所(たとえばC:\tmpの下など)に配置してください。WindowsのCドライブはWSLにおいては/mnt/c というディレクトリーにマウントされるので，以下の要領でコピーし，解凍することができます。
 ```
-$ cp /mnt/c/tmp/phase0_2020.01.tar.gz .
-$ tar -zxvf phase0_2020.01.tar.gz
+$ cp /mnt/c/tmp/phase0_2023.01.tar.gz .
+$ tar -zxvf phase0_2023.01.tar.gz
 ```
 
 ### PHASE/0 コンパイル方法
@@ -52,9 +52,9 @@ make -f Makefile.Linux_generic
 というコマンドを実行することによってコンパイルすることができます。
 
 ### PHASE/0の実行
-以上の作業によって，ホームディレクトリーの下のphase0\_2020.01の下のbinというディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
+以上の作業によって，ホームディレクトリーの下のphase0\_2023.01の下のbinというディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
 ```
-$ mpiexec -n NP $HOME/phase0_2020.01/bin/phase ne=NE nk=NK
+$ mpiexec -n NP $HOME/phase0_2023.01/bin/phase ne=NE nk=NK
 ```
 mpiexecというコマンドは，MPIアプリケーションを実行するためのコマンドです。NP, NE, NKは実際は整数値を指定します。NPは総並列数，NEはバンド並列数，NKはk点並列数に対応します。
 
@@ -135,7 +135,7 @@ $ sudo apt-get install python-is-python3
 ```
 - python3の引数としてPythonスクリプトを実行する
 ```
-$ python3 $HOME/phase0_2020.01/bin/conv.py
+$ python3 $HOME/phase0_2023.01/bin/conv.py
 ```
  
 #### dos.pyスクリプトが利用できるようにする方法

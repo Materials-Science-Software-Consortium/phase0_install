@@ -31,7 +31,7 @@ $ sudo apt install -y make gcc gfortran libfftw3-dev libopenmpi-dev
 
 ## PHASE/0のインストール
 ### アーカイブのコピーと解凍
-PHASE/0のアーカイブをまずはダウンロードし，分かりやすい場所(たとえばC:\tmpの下など)に配置してください。WindowsのCドライブはWSLにおいては/mnt/c というディレクトリーにマウントされるので，以下の要領でコピーし，解凍することができます。
+PHASE/0のアーカイブをまずは[ダウンロードページ](https://azuma.nims.go.jp/cms1/downloads/software)からダウンロードし(無償ですが登録が必要)，分かりやすい場所(たとえばC:\tmpの下など)に配置してください。WindowsのCドライブはWSLにおいては/mnt/c というディレクトリーにマウントされるので，以下の要領でコピーし，解凍することができます。
 ```
 $ cp /mnt/c/tmp/phase0_2023.01.tar.gz .
 $ tar -zxvf phase0_2023.01.tar.gz
@@ -117,10 +117,19 @@ WSLで[Xウィンドウシステム](https://ja.wikipedia.org/wiki/X_Window_Syst
 
 などがあります
 
-また，環境変数DISPLAYに値を設定します。
+また，環境変数DISPLAYに値を設定します。その方法はWSLのバージョン1と2とで異なります。
+
+WSLバージョン1の場合
 ```
 $ export DISPLAY=127.0.0.1:0.0
 ```
+
+WSLバージョン2の場合
+```
+$ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+```
+
+上述のようなコマンドをホームディレクトリーの `.bashrc` ファイルに記述しておけばログインする度に設定されるようになります。
 
 ### pythonスクリプトが動作するようにする方法
 PHASE/0にはpythonスクリプトがいくつか同梱されています。これらは先頭に`#!/usr/bin/env python`という記述がある場合がありこれらは直接実行できるようになっていますが，UbuntuのPythonコマンドはpythonではなくpython3のようです。そのため，以下のいずれかの対応をしないと実行することができません。

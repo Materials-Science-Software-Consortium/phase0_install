@@ -47,7 +47,7 @@ F90 = mpif90 -m64
 `-fallow-argument-mismatch`を加えます。
 お使いのgfortranのバージョンにあわせたMakefile.Linux_genericを編集ができたら
 ```
-make -f Makefile.Linux_generic
+make -f Makefile.Linux_generic install
 ```
 というコマンドを実行することによってコンパイルすることができます。
 

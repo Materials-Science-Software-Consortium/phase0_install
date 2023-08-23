@@ -40,25 +40,39 @@ $ tar -zxvf phase0_2023.01.tar.gz
 ```
 
 ### PHASE/0 コンパイル方法
+PHASE/0のソースコードは`src_phase`ディレクトリーにあるのでまずはここに移ります。
+```
+cd $HOME/phase0_2023.01/src_phase
+```
+
 コンパイルは，付属のMakefile.Linux\_genericを用いて行うことができます。このMakefileを用いるとFFTライブラリーとしてはFFTW3, LAPACK/BLASはPHASE/0に同梱されているnetlib版が利用されます。
 ただし，比較的新しい (バージョン10以降) gfortranを用いる場合，付属のMakefile.Linux\_genericではコンパイルすることができません。以下の箇所
 ```
 F90 = mpif90 -m64
 ```
-に
-`-fallow-argument-mismatch`を加えます。
+を
+```
+F90 = mpif90 -m64 -fallow-argument-mismatch
+```
+
+に変更します。この変更は何らかのテキストエディターを用いて行います。WSLはWindowsのアプリを起動することもできるので，たとえば
+```
+notepad.exe Makefile.Linux_generic
+```
+とすることによってWindowsには必ずインストールされているエディターである`notepad.exe`を用いて編集することもできます。
+
 お使いのgfortranのバージョンにあわせたMakefile.Linux_genericを編集ができたら
 ```
 make -f Makefile.Linux_generic install
 ```
-というコマンドを実行することによってコンパイルすることができます。
+というコマンドを実行することによってコンパイルすることができます。コンパイルの結果得られるバイナリーは`$HOME/phase0_2023.01/bin`の下に配置されます。
 
 ### PHASE/0の実行
 以上の作業によって，ホームディレクトリーの下のphase0\_2023.01の下のbinというディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
 ```
 $ mpiexec -n NP $HOME/phase0_2023.01/bin/phase ne=NE nk=NK
 ```
-mpiexecというコマンドは，MPIアプリケーションを実行するためのコマンドです。NP, NE, NKは実際は整数値を指定します。NPは総並列数，NEはバンド並列数，NKはk点並列数に対応します。
+mpiexecというコマンドは，MPIアプリケーションを実行するためのコマンドです。NP, NE, NKは実際は整数値を指定します。NPは総並列数，NEはバンド並列数，NKはk点並列数に対応します。NP = NE x NK という関係が成立している必要があります。
 
 なお，後述のWSL2を用いない場合並列計算を実行すると以下のようなWARNINGが得られてしまいます。結果には影響しないようです。
 ```
@@ -112,7 +126,7 @@ gnuplot-x11はプロットツールです。PHASE/0に付属するツール群�
 ほかにも好みのアプリケーションがあれば適宜インストールしてください。
 
 ### Xウィンドウシステムを用いる方法
-WSLで[Xウィンドウシステム](https://ja.wikipedia.org/wiki/X_Window_System)を用いることが可能です。まずは，Windows側にXサーバーを（インストールされていなければ)インストールし，起動します。無償で使えるWindows要のXサーバーとしては，たとえば
+WSLで[Xウィンドウシステム](https://ja.wikipedia.org/wiki/X_Window_System)を用いることが可能です。まずは，Windows側にXサーバーを(インストールされていなければ)インストールし，起動します。無償で使えるWindows要のXサーバーとしては，たとえば
 
 - [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
 - [MobaXterm](https://mobaxterm.mobatek.net/)（ターミナルエミュレーターですが起動するとXサーバーもついでに有効になります）

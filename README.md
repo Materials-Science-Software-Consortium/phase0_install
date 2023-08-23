@@ -27,7 +27,7 @@ cd phase0_2023.01
 
 個別環境向けのインストール説明です。
 
-- [Ubuntu20.04LTS (WSL)](./WSL/README.md)
+- [WSL](./WSL/README.md)
 - [Intel oneAPI](./InteloneAPI/README.md)
 - [FOCUS](./FOCUS/README.md)
 - [SX-Aurora TSUBASA](./Aurora/README.md)

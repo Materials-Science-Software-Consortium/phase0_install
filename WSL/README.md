@@ -22,6 +22,7 @@ WSLにおいて利用できるLinuxのディストリビューションは複数
 [MobaXterm](https://mobaxterm.mobatek.net/)というターミナルエミュレーターからUbuntuに接続することもできます。UbuntuをインストールするとMobaXtermの"User sessions"一覧に追加されるので，そこをダブルクリックすることによって接続することできます。この方法によって接続すると，後述のXサーバーの利用のために特別な設定が不要になるなどのメリットがあります。
 
 ## 必要なアプリケーションのインストール
+### PHASE/0コンパイルするために必要なアプリケーションのインストール
 PHASE/0をコンパイルするために必要なアプリケーションのインストールを行います。以下の要領でコマンドを実行してみてください。
 
 ```
@@ -31,9 +32,40 @@ $ sudo apt install -y make gcc gfortran libfftw3-dev libopenmpi-dev
 
 最初のコマンドによって最初からインストールされているアプリケーションのアップデートが行われます。二つ目のコマンドによって，PHASE/0をコンパイルするために必要なアプリケーションやライブラリー群がインストールされます。makeはビルドツール，gcc, gfortranはCコンパイラーおよびFortranコンパイラー，libfftw3-devはFFTW3というFFTライブラリー，libopenmpi-devはOpenMPIというMPIライブラリーです。
 
+### 可視化などに必要アプリケーションのインストール
+以下のコマンドによって，X11やgnuplotなどのアプリケーションをインストールすることができます。
+```
+$ sudo apt install -y xorg-dev gnuplot-x11 ghostscript evince gedit
+```
+gnuplot-x11はプロットツールです。PHASE/0に付属するツール群の多くがgnuplot-x11に依存するので，インストールしておくことが推奨されます。gnuplot-x11はX関連の他のアプリもインストールされるためかインストールサイズが大きく，時間も相応にかかりますのでご注意ください。ghostscriptやevinceはEPSファイルを表示するために必要なアプリケーションです。先に言及したPHASE/0に付属するツール群は結果としてEPS形式の画像ファイルを出力することが多いので，やはりインストールしておくことが推奨されます。geditはテキストエディターです。Linuxの標準的なテキストエディターはviやemacsですが，これらになじみがない場合インストールしておくとよいでしょう。
+
+ほかにも好みのアプリケーションがあれば適宜インストールしてください。
+
+#### Xウィンドウシステムを用いる方法
+可視化のアプリケーションを用いる場合，[Xサーバー](https://ja.wikipedia.org/wiki/X_Window_System)が必要となります。まずは，Windows側にXサーバーを(インストールされていなければ)インストールし，起動します。無償で使えるWindows用のXサーバーとしては，たとえば
+
+- [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
+- [MobaXterm](https://mobaxterm.mobatek.net/)（ターミナルエミュレーターですが起動するとXサーバーもついでに有効になります）
+
+などがあります
+
+MobaXtermを用いてWSLに接続する場合Xサーバーの利用に特別な設定は要りませんが，MobaXterm以外のターミナルエミュレーターを用いる場合環境変数DISPLAYに値を設定しないとXサーバーを用いることができません。その方法はWSLのバージョン1と2とで異なります。
+
+WSLバージョン1の場合
+```
+$ export DISPLAY=127.0.0.1:0.0
+```
+
+WSLバージョン2の場合
+```
+$ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
+```
+
+上述のようなコマンドをホームディレクトリーの `.bashrc` ファイルに記述しておけばログインする度に設定されるようになります。また，Xサーバーによっては外部からの接続を許可する設定を施す必要があります。
+
 ## PHASE/0のインストール
 ### アーカイブのコピーと解凍
-PHASE/0のアーカイブをまずは[ダウンロードページ](https://azuma.nims.go.jp/cms1/downloads/software)からダウンロードし(無償ですが登録が必要)，分かりやすい場所(たとえばC:\tmpの下など)に配置してください。WindowsのCドライブはWSLにおいては/mnt/c というディレクトリーにマウントされるので，以下の要領でコピーし，解凍することができます。
+PHASE/0のアーカイブをまずは[ダウンロードページ](https://azuma.nims.go.jp/cms1/downloads/software)からダウンロードし(無償ですが登録が必要)，分かりやすい場所(たとえば`C:\tmp`の下など)に配置してください。WindowsのCドライブはWSLにおいては`/mnt/c` というディレクトリーにマウントされるので，以下の要領でコピーし，解凍することができます。
 ```
 $ cp /mnt/c/tmp/phase0_2023.01.tar.gz .
 $ tar -zxvf phase0_2023.01.tar.gz
@@ -42,35 +74,38 @@ $ tar -zxvf phase0_2023.01.tar.gz
 ### PHASE/0 コンパイル方法
 PHASE/0のソースコードは`src_phase`ディレクトリーにあるのでまずはここに移ります。
 ```
-cd $HOME/phase0_2023.01/src_phase
+$ cd $HOME/phase0_2023.01/src_phase
 ```
 
-コンパイルは，付属のMakefile.Linux\_genericを用いて行うことができます。このMakefileを用いるとFFTライブラリーとしてはFFTW3, LAPACK/BLASはPHASE/0に同梱されているnetlib版が利用されます。
-ただし，比較的新しい (バージョン10以降) gfortranを用いる場合，付属のMakefile.Linux\_genericではコンパイルすることができません。以下の箇所
+コンパイルは，付属の`Makefile.Linux_generic`を用いて行うことができます。このMakefileを用いるとFFTライブラリーとしてはFFTW3, LAPACK/BLASはPHASE/0に同梱されているnetlib版が利用されます。
+
+コンパイルに用いるコマンドはお使いの`gfortran`のバージョンに依存します。以下のコマンドによってまずは`gfortran`のバージョンを確認します。
 ```
-F90 = mpif90 -m64
+$ gfortran --version
+GNU Fortran (Ubuntu 11.3.0-1ubuntu1~22.04) 11.3.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
-を
+この例では`gfortran`のバージョンは11.3.0です。
+
+`gfortran`のバージョンが10未満の場合
+
 ```
-F90 = mpif90 -m64 -fallow-argument-mismatch
+$ make -f Makefile.Linux_generic install
 ```
 
-に変更します。この変更は何らかのテキストエディターを用いて行います。WSLはWindowsのアプリを起動することもできるので，たとえば
-```
-notepad.exe Makefile.Linux_generic
-```
-とすることによってWindowsには必ずインストールされているエディターである`notepad.exe`を用いて編集することもできます。
+`gfortran`のバージョンが10以上の場合
 
-お使いのgfortranのバージョンにあわせたMakefile.Linux_genericを編集ができたら
 ```
-make -f Makefile.Linux_generic install
+$ make -f Makefile.Linux_generic F90='mpif90 -m64 -fallow-argument-mismatch' install
 ```
-というコマンドを実行することによってコンパイルすることができます。コンパイルの結果得られるバイナリーは`$HOME/phase0_2023.01/bin`の下に配置されます。
+コンパイルの結果得られるバイナリーは`$HOME/phase0_2023.01/bin`の下に配置されます。
 
 ### PHASE/0の実行
-以上の作業によって，ホームディレクトリーの下のphase0\_2023.01の下のbinというディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
+以上の作業によって`$HOME/phase0_2023.01/bin`というディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
 ```
-$ mpiexec -n NP $HOME/phase0_2023.01/bin/phase ne=NE nk=NK
+$ mpiexec -n NP ~/phase0_2023.01/bin/phase ne=NE nk=NK
 ```
 mpiexecというコマンドは，MPIアプリケーションを実行するためのコマンドです。NP, NE, NKは実際は整数値を指定します。NPは総並列数，NEはバンド並列数，NKはk点並列数に対応します。NP = NE x NK という関係が成立している必要があります。
 
@@ -90,7 +125,6 @@ mechanism if one is available. This may result in lower performance.
 ```
 
 ## WSL活用Tips
-コンパイルし，実行するだけならば前節までの説明で十分ですが，いろいろなアプリケーションをインストールすることによってPHASE/0を便利に利用できるようになります。ここでは，そのようなアプリケーションのインストール方法やWSLの便利な使い方を紹介したいと思います。
 
 ### WSL2
 WSLには多くの改善がなされたバージョン，[WSL2](https://docs.microsoft.com/ja-jp/windows/wsl/compare-versions)が存在します。機能の比較などを確認し，有用と判断されたのであれば切り替えるとよいでしょう。
@@ -111,41 +145,12 @@ C:Users\user> wsl --set-version Ubuntu-20.04 2
 場合によっては時間がかかるかもしれませんが，このコマンドが正常終了すればWSL2に切り替わっているはずです。再度```wsl --list --verbose```を実行し，確認してみましょう。
 
 ### ファイルシステムについて
-WindowsからはUbuntuのファイルシステムはネットワークドライブとして認識されるようです。エクスプローラーに```\\wsl$```と入力するとUbuntu-20.04というフォルダーがエクスプローラーに表示されます。ダブルクリックしてUbuntu-20.04にアクセスすると，通常のLinuxのルートディレクトリーのようなフォルダー構成のフォルダー群があらわれます。逆に，Ubuntu側は/mnt/以下にWindowsのドライブがマウントされます。たとえばCドライブは/mnt/c にマウントされます。
+WindowsからはUbuntuのファイルシステムはネットワークドライブとして認識されるようです。エクスプローラーに```\\wsl$```と入力するとUbuntu-20.04というフォルダーがエクスプローラーに表示されます。ダブルクリックしてUbuntu-20.04にアクセスすると，通常のLinuxのルートディレクトリーのようなフォルダー構成のフォルダー群があらわれます。逆に，Ubuntu側は`/mnt/`以下にWindowsのドライブがマウントされます。たとえばCドライブは`/mnt/c`にマウントされます。
 
-- Ubuntuにファイルを取り込む方法：エクスプローラーからUbuntuのディレクトリーにファイルコピーをしてもよいのですが，この方法を用いるとファイルの持ち主がrootになるようで，場合によってはわずらわしいかもしれません。/mnt/c/...からコピーすればこのような問題はありません。
-- UbuntuのファイルにWindowsからアクセスする方法：Ubuntuのファイルシステムはエクスプローラーなどからアクセス可能なので，作業スタイルに応じて自由にアクセスすればよいです。
+- Ubuntuにファイルを取り込む方法：エクスプローラーからUbuntuのディレクトリーにファイルコピーをしてもよいのですが，この方法を用いるとファイルの持ち主がrootになるようで，場合によってはわずらわしいかもしれません。`/mnt/c/...`からコピーすればこのような問題はありません。
+- UbuntuのファイルにWindowsからアクセスする方法：Ubuntuのファイルシステムはエクスプローラーなどからアクセス可能なので，作業スタイルに応じて自由にアクセスすればよいです。WSLからWindowsアプリケーションを起動することも可能となっているため，たとえばWSLのコマンドプロンプトから`explorer.exe .`というコマンドを実行すると現在いるディレクトリーをエクスプローラーで開くこともできます。
 
-### 可視化用アプリケーションのインストール
-以下のコマンドによって，X11やgnuplotなどのアプリケーションをインストールすることができます。
-```
-$ sudo apt install -y xorg-dev gnuplot-x11 ghostscript evince gedit
-```
-gnuplot-x11はプロットツールです。PHASE/0に付属するツール群の多くがgnuplot-x11に依存するので，インストールしておくことが推奨されます。gnuplot-x11はX関連の他のアプリもインストールされるためかインストールサイズが大きく，時間も相応にかかりますのでご注意ください。ghostscriptやevinceはEPSファイルを表示するために必要なアプリケーションです。先に言及したPHASE/0に付属するツール群は結果としてEPS形式の画像ファイルを出力することが多いので，やはりインストールしておくことが推奨されます。geditはテキストエディターです。Linuxの標準的なテキストエディターはviやemacsですが，これらになじみがない場合インストールしておくとよいでしょう。
-
-ほかにも好みのアプリケーションがあれば適宜インストールしてください。
-
-### Xウィンドウシステムを用いる方法
-WSLで[Xウィンドウシステム](https://ja.wikipedia.org/wiki/X_Window_System)を用いることが可能です。まずは，Windows側にXサーバーを(インストールされていなければ)インストールし，起動します。無償で使えるWindows要のXサーバーとしては，たとえば
-
-- [VcXsrv](https://sourceforge.net/projects/vcxsrv/)
-- [MobaXterm](https://mobaxterm.mobatek.net/)（ターミナルエミュレーターですが起動するとXサーバーもついでに有効になります）
-
-などがあります
-
-MobaXtermを用いてWSLに接続する場合，Xサーバーの利用に特別な設定は要りませんが，MobaXterm以外のターミナルエミュレーターを用いる場合環境変数DISPLAYに値を設定しないとXサーバーを用いることができません。その方法はWSLのバージョン1と2とで異なります。
-
-WSLバージョン1の場合
-```
-$ export DISPLAY=127.0.0.1:0.0
-```
-
-WSLバージョン2の場合
-```
-$ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
-```
-
-上述のようなコマンドをホームディレクトリーの `.bashrc` ファイルに記述しておけばログインする度に設定されるようになります。また，Xサーバーによっては外部からの接続を許可する設定を施す必要があります。
+前述のMobaXtermを用いてWSLに接続する場合，付属のsftpクライアントを用いてファイルのやり取りをすることもできます。
 
 ### pythonスクリプトが動作するようにする方法
 PHASE/0にはpythonスクリプトがいくつか同梱されています。これらは先頭に`#!/usr/bin/env python`という記述がある場合がありこれらは直接実行できるようになっていますが，UbuntuのPythonコマンドはpythonではなくpython3のようです。そのため，以下のいずれかの対応をしないと実行することができません。
@@ -171,4 +176,3 @@ $ sudo apt-get install python3-pip
 $ sudo apt-get install python3-tk
 $ python3 -m pip install matplotlib
 ```
-

@@ -21,3 +21,11 @@ source /opt/intel/oneapi/setvars.sh
 cd src_phase
 make install
 ```
+
+三次元版のコンパイルには、[Makefile.3d](./Makefile.3d)を使用して下さい。
+
+```sh
+cd src_phase_3d
+make -f Makefile.3d install
+```
+

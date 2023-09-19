@@ -1,6 +1,6 @@
 # WSLへのインストール
 ## 概要
-[WSL](https://docs.microsoft.com/ja-jp/windows/wsl/)とは，Windows subsystem for Linuxの略称であり，WindowsにおいてLinux環境を構築する手段の一つです。[VirtualBox](https://www.virtualbox.org/)などの仮想化アプリケーションを用いてLinuxをインストールすることによって同様の環境を構築することは可能ですが，Windows謹製の仕組みであり，よりシームレスにホストOS (Windows)とゲストOS (Linux)を用いることができるようになっています。本稿では，以下のようなことがらについて解説します。
+[WSL](https://docs.microsoft.com/ja-jp/windows/wsl/)とは，Windows subsystem for Linuxの略称であり，WindowsにおいてLinux環境を構築する手段の一つです。[VirtualBox](https://www.virtualbox.org/)などの仮想化アプリケーションを用いてLinuxをインストールすることによって同様の環境を構築することは可能ですが，Windowsに標準で備わっている仕組みのため，よりシームレスにホストOS (Windows)とゲストOS (Linux)を用いることができるようになっています。本稿では，以下のようなことがらについて解説します。
 
 - WSLの有効化およびLinuxのインストール
 - PHASE/0をコンパイルするために必要なアプリケーションのインストール

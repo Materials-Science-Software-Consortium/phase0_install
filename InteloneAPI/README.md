@@ -5,7 +5,7 @@
 高性能なインテルコンパイラが無償で利用できます。
 [公式サイト](https://www.intel.com/content/www/us/en/developer/tools/oneapi/toolkits.html)から、Base ToolkitとHPC Toolkitをインストールして下さい。
 
-Intel oneAPIは`/opt/intel`（規定値）にインストールされているとして説明します。
+Intel oneAPIは`/opt/intel`（既定値）にインストールされているとして説明します。
 
 ログインの度に（計算実行のみの際にも）下記コマンドを実行すると、環境設定完了です。
 

@@ -23,7 +23,7 @@ cd phase0_2023.01
 patch -p 1 < ../phase0_2023.01.01.patch
 ```
 
-標準的なLinux環境など、一般的なインストール手順はユーザーマニュアルを参照してください。
+標準的なLinux環境など、一般的なインストール手順は[ユーザーマニュアル](https://phase0.readthedocs.io/ja/latest/install/install.html)を参照してください。
 
 ## 個別環境
 

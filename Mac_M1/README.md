@@ -13,7 +13,7 @@ brew install gnuplot
 
 ## コンパイル：電子状態計算ソルバーphase, ekcal, epsmain
 
-二次元版には、Mac (Apple Silicon) 用のMakefileが付属しています。
+Mac (Apple Silicon) 用のMakefileが付属しています。
 
 ```sh
 cd src_phase

@@ -31,6 +31,7 @@ patch -p 1 < ../phase0_2023.01.01.patch
 
 - [WSL](./WSL/README.md)
 - [Intel oneAPI](./InteloneAPI/README.md)
+- [富岳](./Fugaku/README.md)
 - [FOCUS](./FOCUS/README.md)
 - [SX-Aurora TSUBASA](./Aurora/README.md)
 - [Mac (Apple Silicon)](./Mac_M1/README.md)

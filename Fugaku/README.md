@@ -4,7 +4,7 @@
 
 ## FFTWを使う準備
 
-PHASE/0は、高速Fourire変換に[FFTW](https://fftw.org/)を利用します。
+PHASE/0は、高速Fourier変換に[FFTW](https://fftw.org/)を利用します。
 SPACKを使って、プリインストールされているFFTWを利用可能にします。
 
 ```sh

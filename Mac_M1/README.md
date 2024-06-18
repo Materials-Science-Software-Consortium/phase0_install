@@ -28,8 +28,7 @@ make -f Makefile.M1Mac install
 
 ```sh
 cd src_workfunc
-F90="gfortran -fallow-argument-mismatch" make
+F90="gfortran -fallow-argument-mismatch" make install
 ```
 
-生成された実行形式ファイルは`workfunc`です。
-このファイルも`bin`ディレクトリに移動させても良いでしょう。
+生成された実行形式ファイル`workfunc`も、`bin`ディレクトリにあります。

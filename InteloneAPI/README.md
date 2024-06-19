@@ -13,19 +13,12 @@ Intel oneAPIは`/opt/intel`（既定値）にインストールされている�
 source /opt/intel/oneapi/setvars.sh
 ```
 
-## コンパイル
+## コンパイル（二次元版と三次元版共通）
 
-二次元版のコンパイルには、この[Makefile](./Makefile)を使用して下さい。
-
-```sh
-cd src_phase
-make install
-```
-
-三次元版のコンパイルには、[Makefile.3d](./Makefile.3d)を使用して下さい。
+配布物ソースコードには、いくつかのMakefileが付属しています。
+それらの中で、`Makefile.asahi_impi`は、Intel製のコンパイラとライブラリ（MKLとMPI）を利用するMakefileですので、oneAPIと相性が良いです。
+複数の引数を与えることにより、流用できます。
 
 ```sh
-cd src_phase_3d
-make -f Makefile.3d install
+make F90="mpiifx -traceback" CC=icx LINK="mpiifx -traceback" MKLHOME="/opt/intel/oneapi/mkl/latest/lib/intel64/" INCLUDE="-I/opt/intel/oneapi/mkl/latest/include/fftw/" -f Makefile.asahi_impi install
 ```
-

@@ -7,8 +7,8 @@
 #SBATCH -o stdout.%J.log
 #SBATCH -e stderr.%J.log
 
-module load MPI-impi-18.3.222
+source /home1/share/opt/intel-2023.0.0/setvars.sh
 
-PHASE=~/phase0_2023.01/bin/phase
+PHASE=~/phase0_2024.01/bin/phase
 
 mpirun -n 12 $PHASE # ne=1 nk=12

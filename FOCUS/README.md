@@ -17,23 +17,26 @@ ssh ff
 
 ## コンパイル
 
-下記コマンドを実行して、コンパイル環境を整えます。
+かつては`module`コマンドでコンパイル環境を整えていましたが、（CentOSからRockyへの）OS入れ替えと前後して、コンパイラのライセンスが取得できなくなってしまいました。
 
-```sh
-module load PrgEnv-intel-18.0.3.222 MPI-impi-18.3.222
+```txt
+ifort: エラー #10052: FLEXlm ライセンスをチェックアウトできませんでした。
 ```
 
-`phase0_2023.01.tar.gz`を展開して、`src_phase`ディレクトリに`Makefile`をコピーします。
-
-[Makefile](./Makefile)
-
-同ディレクトリにて、makeコマンドを実行します。
+oneAPIがあるので、そちらを使います。
 
 ```sh
-make install
+source /home1/share/opt/intel-2023.0.0/setvars.sh
 ```
 
-コンパイルされた実行形式ファイルは、`phase0_2023.01/bin/`ディレクトリにコピーされます。
+[oneAPI](../InteloneAPI/README.md)の説明が参考になりますが、インストール（ライブラリが存在する）ディレクトリなどが異なるので、実行オプションは少々異なります。
+`src_phase` （もしくは`src_phase_3d`）ディレクトリにて、次のようにmakeコマンドを実行します。
+
+```sh
+make F90="mpiifort -traceback" CC=icx LINK="mpiifort -traceback" MKLHOME="/home1/share/opt/intel-2023.0.0/mkl/latest/lib/intel64/" -f Makefile.asahi_impi install
+```
+
+コンパイルされた実行形式ファイルは、`phase0_2024.01/bin/`ディレクトリにコピーされます。
 
 ## 計算実行
 
@@ -62,13 +65,13 @@ PHASE/0を実行するためのサンプルスクリプトを用意しました�
 コンパイル時の設定に合わせてください。
 
 ```sh
-module load MPI-impi-18.3.222
+source /home1/share/opt/intel-2023.0.0/setvars.sh
 ```
 
 - コンパイル済みのPHASE/0実行形式ファイルを指定します。
 
 ```sh
-PHASE=~/phase0_2023.01/bin/phase
+PHASE=~/phase0_2024.01/bin/phase
 ```
 
 - 計算を実行するコマンドです。

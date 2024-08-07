@@ -33,7 +33,7 @@ source /home1/share/opt/intel-2023.0.0/setvars.sh
 `src_phase` （もしくは`src_phase_3d`）ディレクトリにて、次のようにmakeコマンドを実行します。
 
 ```sh
-make F90="mpiifort -traceback" CC=icx LINK="mpiifort -traceback" MKLHOME="/home1/share/opt/intel-2023.0.0/mkl/latest/lib/intel64/" -f Makefile.asahi_impi install
+make CC=icx MKLHOME="/home1/share/opt/intel-2023.0.0/mkl/latest/lib/intel64/" -f Makefile.asahi_impi install
 ```
 
 コンパイルされた実行形式ファイルは、`phase0_2024.01/bin/`ディレクトリにコピーされます。

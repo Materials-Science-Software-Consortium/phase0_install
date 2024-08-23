@@ -67,14 +67,14 @@ $ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
 ### アーカイブのコピーと解凍
 PHASE/0のアーカイブをまずは[ダウンロードページ](https://azuma.nims.go.jp/cms1/downloads/software)からダウンロードし(無償ですが登録が必要)，分かりやすい場所(たとえば`C:\tmp`の下など)に配置してください。WindowsのCドライブはWSLにおいては`/mnt/c` というディレクトリーにマウントされるので，以下の要領でコピーし，解凍することができます。
 ```
-$ cp /mnt/c/tmp/phase0_2023.01.tar.gz .
-$ tar -zxvf phase0_2023.01.tar.gz
+$ cp /mnt/c/tmp/phase0_2024.01.tar.gz .
+$ tar -zxvf phase0_2024.01.tar.gz
 ```
 
 ### PHASE/0 コンパイル方法
 PHASE/0のソースコードは`src_phase`ディレクトリーにあるのでまずはここに移ります。
 ```
-$ cd $HOME/phase0_2023.01/src_phase
+$ cd $HOME/phase0_2024.01/src_phase
 ```
 
 コンパイルは，付属の`Makefile.Linux_generic`を用いて行うことができます。このMakefileを用いるとFFTライブラリーとしてはFFTW3, LAPACK/BLASはPHASE/0に同梱されているnetlib版が利用されます。
@@ -100,12 +100,12 @@ $ make -f Makefile.Linux_generic install
 ```
 $ make -f Makefile.Linux_generic F90='mpif90 -m64 -fallow-argument-mismatch' install
 ```
-コンパイルの結果得られるバイナリーは`$HOME/phase0_2023.01/bin`の下に配置されます。
+コンパイルの結果得られるバイナリーは`$HOME/phase0_2024.01/bin`の下に配置されます。
 
 ### PHASE/0の実行
-以上の作業によって`$HOME/phase0_2023.01/bin`というディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
+以上の作業によって`$HOME/phase0_2024.01/bin`というディレクトリーにphaseなどのバイナリーファイルが作成されたはずです。これを実行するコマンドは下記の通り。
 ```
-$ mpiexec -n NP ~/phase0_2023.01/bin/phase ne=NE nk=NK
+$ mpiexec -n NP ~/phase0_2024.01/bin/phase ne=NE nk=NK
 ```
 mpiexecというコマンドは，MPIアプリケーションを実行するためのコマンドです。NP, NE, NKは実際は整数値を指定します。NPは総並列数，NEはバンド並列数，NKはk点並列数に対応します。NP = NE x NK という関係が成立している必要があります。
 
@@ -168,7 +168,7 @@ $ sudo apt-get install python-is-python3
 ```
 - python3の引数としてPythonスクリプトを実行する
 ```
-$ python3 $HOME/phase0_2023.01/bin/conv.py
+$ python3 $HOME/phase0_2024.01/bin/conv.py
 ```
  
 #### dos.pyスクリプトが利用できるようにする方法

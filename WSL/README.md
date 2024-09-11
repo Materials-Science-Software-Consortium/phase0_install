@@ -152,11 +152,14 @@ WindowsからはUbuntuのファイルシステムはネットワークドライ�
 
 前述のMobaXtermを用いてWSLに接続する場合，付属のsftpクライアントを用いてファイルのやり取りをすることもできます。
 
-### pythonスクリプトが動作するようにする方法
+### pythonスクリプトについて
+PHASE/0にはpythonスクリプトがいくつか同梱されています。ここでは，スクリプトを利用するにあたって気に留めておく必要のある事柄について説明します。
+#### pythonスクリプトが動作するようにする方法
 > [!NOTE]
 > バージョン2024.01以降，シェバン行において指定するPythonコマンドとして`python3`を用いるようになったため，以下の作業を行う必要はなくなりました。
 
-PHASE/0にはpythonスクリプトがいくつか同梱されています。これらは先頭に`#!/usr/bin/env python`という記述がある場合がありこれらは直接実行できるようになっていますが，UbuntuのPythonコマンドはpythonではなくpython3のようです。そのため，以下のいずれかの対応をしないと実行することができません。
+同梱のpythonスクリプトの先頭に`#!/usr/bin/env python`という記述がある場合がありこれらは直接実行できるようになっていますが，UbuntuのPythonコマンドはpythonではなくpython3のようです。そのため，以下のいずれかの対応をしないと実行することができません。
+
 - 先頭の`#!/usr/bin/env python`を`#!/usr/bin/env python3`と書き換える
 - パスが通っているディレクトリーにpython3へのシンボリックリンクをpythonという名前で作る
 ```
@@ -171,8 +174,8 @@ $ sudo apt-get install python-is-python3
 $ python3 $HOME/phase0_2024.01/bin/conv.py
 ```
  
-#### dos.pyスクリプトが利用できるようにする方法
-上記に加え，dos.pyというPythonスクリプトは[tkinter](https://docs.python.org/ja/3/library/tkinter.html)と[matplotlib](https://matplotlib.org/)がインストールされていないと動作しませんが，Ubuntuのpythonにはどちらもインストールされていないようです。以下のコマンドを実行するとインストールすることができます。
+#### dos.pyスクリプトについて
+dos.pyというPythonスクリプトは[tkinter](https://docs.python.org/ja/3/library/tkinter.html)と[matplotlib](https://matplotlib.org/)がインストールされていないと動作しませんが，Ubuntuのpythonにはどちらも標準ではインストールされていないようです。以下のコマンドを実行するとインストールすることができます。
 
 ```
 $ sudo apt-get install python3-pip

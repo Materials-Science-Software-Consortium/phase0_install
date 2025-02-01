@@ -20,5 +20,5 @@ source /opt/intel/oneapi/setvars.sh
 複数の引数を与えることにより、流用できます。
 
 ```sh
-make F90="mpiifx -traceback" CC=icx LINK="mpiifx -traceback" MKLHOME="/opt/intel/oneapi/mkl/latest/lib/intel64/" INCLUDE="-I/opt/intel/oneapi/mkl/latest/include/fftw/" -f Makefile.asahi_impi install
+make F90="mpiifx -traceback" CC=icx LINK="mpiifx -traceback" MKLHOME="$MKLROOT/lib/intel64" INCLUDE="-I$MKLROOT/include/fftw" -f Makefile.asahi_impi install
 ```

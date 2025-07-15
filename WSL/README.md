@@ -12,7 +12,7 @@ WSLを有効にする手続きは下記の通りです。
 
 - コントロールパネルから「プログラムと機能」を選択
 - 結果得られる画面左の領域の「Windowsの機能の有効化または無効化」を選ぶ
-- 結果得られる画面の「Linux用Windowsサブシステム」および「仮想化マシン プラットフォーム」にチェックが入っていない場合チェックをいれて再起動する
+- 結果得られる画面の「Linux用Windowsサブシステム」および「仮想化マシン プラットフォーム」もしくは "Virtual Machine Platform" にチェックが入っていない場合チェックをいれて再起動する
 
  以上の操作によってWSLが有効になります。
 
@@ -27,10 +27,11 @@ PHASE/0をコンパイルするために必要なアプリケーションのイ�
 
 ```
 $ sudo apt-get update
+$ sudo apt-get upgrade
 $ sudo apt install -y make gcc gfortran libfftw3-dev libopenmpi-dev
 ```
 
-最初のコマンドによって最初からインストールされているアプリケーションのアップデートが行われます。二つ目のコマンドによって，PHASE/0をコンパイルするために必要なアプリケーションやライブラリー群がインストールされます。makeはビルドツール，gcc, gfortranはCコンパイラーおよびFortranコンパイラー，libfftw3-devはFFTW3というFFTライブラリー，libopenmpi-devはOpenMPIというMPIライブラリーです。
+最初のコマンドによってアップグレードできるアプリケーションのリストが作成されます。二つ目のコマンドによって実際のアップグレードが行われます。三つ目のコマンドによって，PHASE/0をコンパイルするために必要なアプリケーションやライブラリー群がインストールされます。makeはビルドツール，gcc, gfortranはCコンパイラーおよびFortranコンパイラー，libfftw3-devはFFTW3というFFTライブラリー，libopenmpi-devはOpenMPIというMPIライブラリーです。
 
 ### 可視化などに必要アプリケーションのインストール
 以下のコマンドによって，X11やgnuplotなどのアプリケーションをインストールすることができます。
@@ -82,12 +83,12 @@ $ cd $HOME/phase0_2024.01/src_phase
 コンパイルに用いるコマンドはお使いの`gfortran`のバージョンに依存します。以下のコマンドによってまずは`gfortran`のバージョンを確認します。
 ```
 $ gfortran --version
-GNU Fortran (Ubuntu 11.3.0-1ubuntu1~22.04) 11.3.0
-Copyright (C) 2021 Free Software Foundation, Inc.
+GNU Fortran (Ubuntu 13.2.0-23ubuntu4) 13.2.0
+Copyright (C) 2023 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
-この例では`gfortran`のバージョンは11.3.0です。
+この例では`gfortran`のバージョンは13.2.0です。
 
 `gfortran`のバージョンが10未満の場合
 
@@ -136,16 +137,16 @@ C:\Users\user> wsl --list --verbose
 以下のような結果が得られるはずです。
 ```
   NAME            STATE           VERSION
-* Ubuntu-20.04    Running         1
+* Ubuntu-24.04    Running         1
 ```
-NAMEカラムの文字列がLinuxディストリビューション名，VERSIONカラムの文字列がWSLのバージョンです。上述の例のUbuntu-20.04をWSL2で動作するようにするためには以下のようなコマンドを実行します。
+NAMEカラムの文字列がLinuxディストリビューション名，VERSIONカラムの文字列がWSLのバージョンです。上述の例のUbuntu-24.04をWSL2で動作するようにするためには以下のようなコマンドを実行します。
 ```
-C:Users\user> wsl --set-version Ubuntu-20.04 2
+C:Users\user> wsl --set-version Ubuntu-24.04 2
 ```
 場合によっては時間がかかるかもしれませんが，このコマンドが正常終了すればWSL2に切り替わっているはずです。再度```wsl --list --verbose```を実行し，確認してみましょう。
 
 ### ファイルシステムについて
-WindowsからはUbuntuのファイルシステムはネットワークドライブとして認識されるようです。エクスプローラーに```\\wsl$```と入力するとUbuntu-20.04というフォルダーがエクスプローラーに表示されます。ダブルクリックしてUbuntu-20.04にアクセスすると，通常のLinuxのルートディレクトリーのようなフォルダー構成のフォルダー群があらわれます。逆に，Ubuntu側は`/mnt/`以下にWindowsのドライブがマウントされます。たとえばCドライブは`/mnt/c`にマウントされます。
+WindowsからはUbuntuのファイルシステムはネットワークドライブとして認識されるようです。エクスプローラーに```\\wsl$```と入力するとUbuntu-24.04というフォルダーがエクスプローラーに表示されます。ダブルクリックしてUbuntu-24.04にアクセスすると，通常のLinuxのルートディレクトリーのようなフォルダー構成のフォルダー群があらわれます。逆に，Ubuntu側は`/mnt/`以下にWindowsのドライブがマウントされます。たとえばCドライブは`/mnt/c`にマウントされます。
 
 - Ubuntuにファイルを取り込む方法：エクスプローラーからUbuntuのディレクトリーにファイルコピーをしてもよいのですが，この方法を用いるとファイルの持ち主がrootになるようで，場合によってはわずらわしいかもしれません。`/mnt/c/...`からコピーすればこのような問題はありません。
 - UbuntuのファイルにWindowsからアクセスする方法：Ubuntuのファイルシステムはエクスプローラーなどからアクセス可能なので，作業スタイルに応じて自由にアクセスすればよいです。WSLからWindowsアプリケーションを起動することも可能となっているため，たとえばWSLのコマンドプロンプトから`explorer.exe .`というコマンドを実行すると現在いるディレクトリーをエクスプローラーで開くこともできます。

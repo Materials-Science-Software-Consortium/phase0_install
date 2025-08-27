@@ -1,4 +1,4 @@
-# PHASE/0インストール (2024.01)
+# PHASE/0インストール (2025)
 
 ## ご注意
 
@@ -10,15 +10,15 @@
 
 [ダウンロードページ](https://azuma.nims.go.jp/cms1/downloads/software)から
 
-- phase0_2024.01.tar.gz
+- phase0_2025.tar.gz
 
 を入手します。（無償ですが、登録が必要です）
 
 ファイルを展開します。
 
 ```sh
-tar zxf phase0_2024.01.tar.gz
-cd phase0_2024.01
+tar zxf phase0_2025.tar.gz
+cd phase0_2025
 ```
 
 標準的なLinux環境など、一般的なインストール手順は[ユーザーマニュアル](https://phase0.readthedocs.io/ja/latest/install/install.html)を参照してください。

@@ -16,9 +16,8 @@ source /opt/intel/oneapi/setvars.sh
 ## コンパイル（二次元版と三次元版共通）
 
 配布物ソースコードには、いくつかのMakefileが付属しています。
-それらの中で、`Makefile.asahi_impi`は、Intel製のコンパイラとライブラリ（MKLとMPI）を利用するMakefileですので、oneAPIと相性が良いです。
-複数の引数を与えることにより、流用できます。
+`2025`版から、oneAPI用の`Makefile.impi`が添付されています。
 
 ```sh
-make F90="mpiifx -traceback" CC=icx LINK="mpiifx -traceback" MKLHOME="$MKLROOT/lib/intel64" INCLUDE="-I$MKLROOT/include/fftw" -f Makefile.asahi_impi install
+make -f Makefile.impi install
 ```

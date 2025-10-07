@@ -31,7 +31,7 @@ source /home1/share/x86_64/archive/opt/intel-2023.0.0/setvars.sh
 
 [oneAPI](../InteloneAPI/README.md)用の`Makefile`が参考になりますが、Fortranのコンパイルコマンドが異なります。
 `src_phase` （もしくは`src_phase_3d`）ディレクトリにて、次のコマンドを実行します。
-（一つ目のコマンドで、コンパイラコマンドを'mpiifx'から'mpiifort'に書き換えた`Makefile`を作成し、二つ目のコマンドでコンパイルを実行します。）
+（一つ目のコマンドで、コンパイラコマンドを`mpiifx`から`mpiifort`に書き換えた`Makefile`を作成し、二つ目のコマンドでコンパイルを実行します。）
 
 ```sh
 sed 's/mpiifx/mpiifort/g' Makefile.impi > Makefile

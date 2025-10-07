@@ -23,20 +23,22 @@ ssh ff
 ifort: エラー #10052: FLEXlm ライセンスをチェックアウトできませんでした。
 ```
 
-oneAPIがあるので、そちらを使います。
+（最新ではありませんが）oneAPIがあるので、そちらを使います。
 
 ```sh
-source /home1/share/opt/intel-2023.0.0/setvars.sh
+source /home1/share/x86_64/archive/opt/intel-2023.0.0/setvars.sh
 ```
 
-[oneAPI](../InteloneAPI/README.md)の説明が参考になりますが、インストール（ライブラリが存在する）ディレクトリなどが異なるので、実行オプションは少々異なります。
-`src_phase` （もしくは`src_phase_3d`）ディレクトリにて、次のようにmakeコマンドを実行します。
+[oneAPI](../InteloneAPI/README.md)用の`Makefile`が参考になりますが、Fortranのコンパイルコマンドが異なります。
+`src_phase` （もしくは`src_phase_3d`）ディレクトリにて、次のコマンドを実行します。
+（一つ目のコマンドで、コンパイラコマンドを'mpiifx'から'mpiifort'に書き換えた`Makefile`を作成し、二つ目のコマンドでコンパイルを実行します。）
 
 ```sh
-make CC=icx MKLHOME="/home1/share/opt/intel-2023.0.0/mkl/latest/lib/intel64/" -f Makefile.asahi_impi install
+sed 's/mpiifx/mpiifort/g' Makefile.impi > Makefile
+make install
 ```
 
-コンパイルされた実行形式ファイルは、`phase0_2024.01/bin/`ディレクトリにコピーされます。
+コンパイルされた実行形式ファイルは、`phase0_2025/bin/`ディレクトリにコピーされます。
 
 ## 計算実行
 

@@ -7,7 +7,7 @@
 #SBATCH -o stdout.%J.log
 #SBATCH -e stderr.%J.log
 
-source /home1/share/x86_64/archive/opt/intel-2023.0.0/setvars.sh
+source /home1/share/x86_64/el8/intel/oneapi-2024.1.0/setvars.sh
 
 PHASE=~/phase0_2025/bin/phase
 
